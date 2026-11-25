@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img"><title>Palets</title>
+  <!-- Redrawn Palets Software Solutions icon: monitor with wrench and gears -->
+  <g fill="none" stroke="#223446" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 10H8a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h32a2 2 0 0 0 2-2v-6"/>
+    <path d="M20 34l-2 6h12l-2-6M15 40h18"/>
+  </g>
+  <path d="M6 15h5l1.5 2-1.5 2H6" fill="#223446"/>
+  <g fill="#2b93d8">
+    <path d="M33 4l1.6.3.4 2.1 1.4.8 2-.8 1.2 1.1-.9 2 .7 1.4 2.1.6v1.7l-2.1.5-.7 1.5.9 1.9-1.2 1.2-2-.9-1.4.8-.4 2.1h-1.7l-.5-2.1-1.4-.8-2 .9-1.2-1.2.9-1.9-.7-1.5-2.1-.5v-1.7l2.1-.6.7-1.4-.9-2 1.2-1.1 2 .8 1.4-.8.4-2.1z"/>
+    <path d="M25 17.5l1.2.2.3 1.5 1 .6 1.4-.6.9.8-.6 1.4.5 1 1.5.4v1.3l-1.5.4-.5 1 .6 1.4-.9.8-1.4-.6-1 .6-.3 1.5H25l-.4-1.5-1-.6-1.4.6-.9-.8.6-1.4-.5-1-1.5-.4v-1.3l1.5-.4.5-1-.6-1.4.9-.8 1.4.6 1-.6z"/>
+  </g>
+  <circle cx="33.8" cy="13" r="2.6" fill="#fff"/><circle cx="25.6" cy="24" r="1.9" fill="#fff"/>
+</svg>

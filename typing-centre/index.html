@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UAE Typing Centre Platform — Product · Mohammed Rasi KV</title>
+<meta name="description" content="A multi-tenant platform for UAE typing, PRO and Amer/Tasheel service centres: front desk, jobs, visa files, VAT invoicing, cash control, HR and WPS payroll, in English and Arabic. Designed and engineered by Mohammed Rasi KV. Private demos available.">
+<meta name="theme-color" content="#f6f6f2">
+<meta property="og:title" content="UAE Typing Centre Platform">
+<meta property="og:description" content="Run a typing or PRO centre from one system: counter, visa files, VAT invoices, cash, staff and payroll. Private demos available.">
+<meta property="og:url" content="https://mrasikv.github.io/typing-centre/">
+<meta property="og:image" content="https://mrasikv.github.io/assets/uae-app/dashboard.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Noto+Kufi+Arabic:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/case.css">
+<style>
+  :root{--uae:#1f6b4a}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:600;letter-spacing:.08em;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+  .badge i{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(229,184,74,.2)}
+  .app-id .mark{width:56px;height:56px;border-radius:14px;background:var(--sage);display:grid;place-items:center;color:#fff;box-shadow:0 6px 18px rgba(31,35,29,.16)}
+  .app-id .mark svg{width:28px;height:28px}
+  .ar{font-family:"Noto Kufi Arabic",var(--sans);font-size:1rem;color:var(--muted);margin-top:6px;direction:rtl}
+  .scope{margin-top:22px;padding:14px 16px;border-left:3px solid var(--sage);background:var(--surface);font-size:.86rem;color:#3a3f37;border-radius:0 6px 6px 0}
+
+  /* Screenshots: protected, with watermark */
+  .shot{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 44px rgba(31,35,29,.1);background:var(--surface);user-select:none;-webkit-user-select:none}
+  .shot img{width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+
+  /* Audience */
+  .who{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .who div{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px}
+  .who b{display:block;font-family:var(--serif);font-weight:400;font-size:1.2rem;line-height:1.25}
+  .who span{font-size:.84rem;color:var(--muted)}
+
+  /* Product tour */
+  .tour{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start}
+  .tabs{display:grid;gap:6px}
+  .tab{all:unset;cursor:pointer;display:block;padding:14px 16px;border-radius:6px;border:1px solid transparent;transition:background .2s,border-color .2s}
+  .tab b{display:block;font-size:.95rem;font-weight:600}
+  .tab span{display:block;font-size:.8rem;color:var(--muted);margin-top:2px}
+  .tab:hover{background:var(--surface)}
+  .tab[aria-selected="true"]{background:var(--surface);border-color:var(--line);box-shadow:inset 3px 0 0 var(--sage)}
+  .tab:focus-visible{outline:2px solid var(--sage);outline-offset:2px}
+  .tour-view figcaption{margin-top:14px;font-size:.9rem;color:#3a3f37;min-height:3em}
+  .tour-view figcaption b{font-weight:600}
+
+  /* Outcomes */
+  .q b{color:var(--uae)}
+
+  .benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:16px}
+  .ben{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:24px 26px}
+  .ben small{display:block;font-size:.64rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .ben h3{font-family:var(--sans);font-size:1rem;font-weight:700;margin-bottom:8px}
+  .ben p{font-size:.88rem;color:#3a3f37}
+  .ben p+p{margin-top:8px;color:var(--muted);font-size:.84rem}
+  .ben p+p b{color:var(--uae);font-weight:700}
+
+  .pk-note{margin-top:14px;font-size:.82rem;color:var(--muted)}
+
+  @media (max-width:980px){
+    .who{grid-template-columns:1fr 1fr}
+    .tour{grid-template-columns:1fr}
+    .tabs{display:flex;overflow-x:auto;gap:8px;padding-bottom:6px;scrollbar-width:thin}
+    .tab{flex:none;padding:10px 14px;background:var(--surface);border-color:var(--line)}
+    .tab span{display:none}
+    .tab[aria-selected="true"]{box-shadow:inset 0 -3px 0 var(--sage)}
+    .benefits{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    .who{grid-template-columns:1fr}
+    .ben{padding:20px}
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="arrow" viewBox="0 0 16 16"><path d="M1 8h13M10 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="logo" viewBox="0 0 40 40">
+      <path d="M8 36V17a12 12 0 0 1 24 0v19" fill="none" stroke="#6f7f62" stroke-width="2.4"/>
+      <path d="M13 36V18.5a7 7 0 0 1 14 0V36" fill="none" stroke="#a9b49e" stroke-width="1.6"/>
+      <path d="M20 12.5l1.5 3.6 3.6 1.5-3.6 1.5L20 22.7l-1.5-3.6-3.6-1.5 3.6-1.5z" fill="#6f7f62"/>
+    </symbol>
+    <symbol id="i-desk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <nav class="wrap nav" aria-label="Main">
+    <a href="../" class="logo" aria-label="Mohammed Rasi KV, home"><svg><use href="#logo"/></svg><span><b>MOHAMMED RASI</b><small>SOFTWARE ENGINEER</small></span></a>
+    <a href="../#work" class="back"><svg><use href="#arrow"/></svg><span>Back to portfolio</span></a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="rv">
+        <div class="app-id"><span class="mark"><svg><use href="#i-desk"/></svg></span><span>My own product · UAE<br><span class="badge"><i></i>Launching soon · private demos open</span></span></div>
+        <h1>UAE Typing Centre Platform</h1>
+        <p class="ar">منصة إدارة مراكز الطباعة وخدمات المندوبين</p>
+        <p class="lead">One system to run a typing, PRO or Amer/Tasheel service centre: the counter, every visa and labour file, VAT-correct invoices, the cash drawer, staff attendance and WPS payroll. Built for how UAE centres actually work, in English and Arabic, on the web, on the phone and at the counter.</p>
+        <dl class="meta">
+          <div><dt>Role</dt><dd>Founder &amp; lead engineer</dd></div>
+          <div><dt>Stack</dt><dd>FastAPI · Angular · Flutter · PostgreSQL</dd></div>
+          <div><dt>Status</dt><dd>Final testing · demos by request</dd></div>
+        </dl>
+        <p class="scope">The product name is not public yet and will be announced at launch. Screenshots use fictional demo data; branding, menus and details are blurred. The full product is shown only in a live demo.</p>
+      </div>
+      <div class="shot hero-art rv"><img src="../assets/uae-app/dashboard.webp" alt="Centre dashboard with today's jobs, overdue work and deadlines (demo data)" width="1200" height="750" draggable="false"></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="wrap">
+    <div class="stats rv">
+      <div class="stat"><b>27</b><span>Modules a centre can switch on, from front desk to payroll</span></div>
+      <div class="stat"><b>540+</b><span>API operations, each checked for role, package and branch</span></div>
+      <div class="stat"><b>670+</b><span>Automated tests across API, web app and mobile app</span></div>
+      <div class="stat"><b>3</b><span>Apps: web (installable), staff mobile app and counter / kiosk screens</span></div>
+    </div>
+  </div>
+
+  <!-- WHO IT'S FOR -->
+  <section>
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Who it's for</span><h2>Made for the UAE service counter</h2></div><p>Single centres and multi-branch groups that prepare and submit government transactions for people and companies.</p></div>
+      <div class="who rv">
+        <div><b>Typing centres</b><span>Walk-ins, applications, Emirates ID, medicals and renewals</span></div>
+        <div><b>Amer &amp; Tasheel centres</b><span>Visa, residency and labour files with many steps</span></div>
+        <div><b>PRO &amp; business services</b><span>Company clients, employees, dependents and retainers</span></div>
+        <div><b>Translation &amp; attestation</b><span>Freelancers, translation memory and delivery tracking</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUSINESS: problem → solution -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">The business side</span><h2>What changes for a centre</h2></div><p>Every module started from a real problem at the counter, then became a rule the system enforces for you.</p></div>
+      <div class="rs">
+        <div class="rs-row rv">
+          <div class="rs-need"><small>The problem</small><h3>A busy counter, paper tokens and retyped details</h3></div>
+          <div><small>What the centre gets</small><p>A front desk built for busy counters: a token queue, ready-made service bundles and the customer confirming details and price before work starts.</p></div>
+          <div class="rs-eng"><small>Why it works</small><p>Details come <b>from the customer</b>, not retyped, so the counter moves faster with fewer mistakes.</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>The problem</small><h3>Government fees mixed with revenue and VAT</h3></div>
+          <div><small>What the centre gets</small><p>Every service has a service charge and a government fee. Invoices show both, charge 5% VAT only on the service charge, and feed the VAT 201 return and e-invoicing.</p></div>
+          <div class="rs-eng"><small>Why it works</small><p>Prices and tax are <b>calculated on the server</b>, never in the browser, so no screen can produce a wrong invoice.</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>The problem</small><h3>Visa files lost between steps and WhatsApp chats</h3></div>
+          <div><small>What the centre gets</small><p>Each applicant has one visa file that tracks every step, deadline and payment, with a status link the customer can open.</p></div>
+          <div class="rs-eng"><small>Why it works</small><p>Customers are <b>kept informed automatically</b>, so staff spend less time answering "what's the status?".</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>The problem</small><h3>Expired documents noticed too late</h3></div>
+          <div><small>What the centre gets</small><p>A compliance hub that lists every expiring passport, visa, Emirates ID and trade licence, sends reminders, and turns them into follow-ups and renewal jobs.</p></div>
+          <div class="rs-eng"><small>Why it works</small><p>Expiries become <b>repeat business</b> instead of lost customers.</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>The problem</small><h3>Cash gaps and changes nobody can explain</h3></div>
+          <div><small>What the centre gets</small><p>Cash drawer shifts with counted totals, company cards reconciled against government fees, discounts and voids that need a manager's approval, and a full audit trail.</p></div>
+          <div class="rs-eng"><small>Why it works</small><p>Money records <b>can't be quietly edited</b>; every correction leaves a trace the owner can see.</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>The problem</small><h3>Attendance, leave and salaries in spreadsheets</h3></div>
+          <div><small>What the centre gets</small><p>Staff check-in, leave with approvals, and payroll with gratuity and the WPS salary file, with warnings when a decision goes against UAE labour law.</p></div>
+          <div class="rs-eng"><small>Why it works</small><p>UAE labour rules are <b>built in</b>, and staff data is handled with consent under UAE data-protection law.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT TOUR -->
+  <section style="padding-top:0" id="tour">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Product tour</span><h2>Inside the platform</h2></div><p>A glimpse of a few screens. The front desk, visa files, invoicing and the rest are shown in a live demo.</p></div>
+      <div class="tour rv">
+        <div class="tabs" role="tablist" aria-label="Screens">
+          <button class="tab" role="tab" aria-selected="true" data-i="0"><b>Jobs</b><span>Ownership, deadlines, documents</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-i="1"><b>Leads</b><span>Enquiries to paying customers</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-i="2"><b>Compliance hub</b><span>Nothing expires unseen</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-i="3"><b>Attendance</b><span>Staff, leave and payroll</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-i="4"><b>Arabic</b><span>Full right-to-left interface</span></button>
+          <a class="tab" href="#demo"><b>More in the live demo →</b><span>Front desk, visa files, invoices and more</span></a>
+        </div>
+        <figure class="tour-view" role="tabpanel" aria-live="polite">
+          <div class="shot"><img id="tour-img" src="../assets/uae-app/job.webp" alt="" width="1200" height="750" draggable="false"></div>
+          <figcaption id="tour-cap"></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">How it helps</span><h2>What owners get out of it</h2></div><p>The point isn't more software. It's a centre that runs the same way whether the owner is there or not.</p></div>
+      <div class="quality">
+        <div class="q rv"><b>Faster</b><h3>Shorter queues</h3><p>Customers found by phone, Emirates ID or passport; bundles add a whole process in one click; details come from the customer's phone, not retyped.</p></div>
+        <div class="q rv"><b>Correct</b><h3>Invoices you can file</h3><p>VAT, government fees, credit notes and the VAT 201 figures follow the rules automatically, ready for UAE e-invoicing.</p></div>
+        <div class="q rv"><b>In control</b><h3>See every branch</h3><p>Live dashboard, approvals on the phone, branch-by-branch cash and a trail of who changed what and when.</p></div>
+        <div class="q rv"><b>Repeat</b><h3>More returning business</h3><p>Expiry reminders, follow-ups and a customer portal bring clients back for renewals.</p></div>
+        <div class="q rv"><b>Always on</b><h3>Works through outages</h3><p>Everyday pages open offline and changes sync when the connection returns, without duplicates.</p></div>
+        <div class="q rv"><b>Fair</b><h3>Pay only for what you use</h3><p>Centres choose a package and add modules later; nothing is lost when they upgrade or downgrade.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGINEERING -->
+  <section style="padding-top:0" id="engineering">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">The engineering side</span><h2>Built like a bank, not a spreadsheet</h2></div><p>One platform serves many centres. The architecture was designed from day one for security, correct money and growth.</p></div>
+      <div class="benefits">
+        <div class="ben rv"><small>Security</small><h3>Each centre's data stays its own</h3><p>Isolation between centres is enforced by the database itself, not just the app, and every action is checked against the person's role and branch.</p><p>Benefit: <b>safe to run many centres on one platform</b>.</p></div>
+        <div class="ben rv"><small>Correctness</small><h3>Money that always adds up</h3><p>Prices, VAT and balances are calculated on the server and kept as a permanent record, so cash, invoices and reports always agree.</p><p>Benefit: <b>accounts an auditor can trust</b>.</p></div>
+        <div class="ben rv"><small>Reliability</small><h3>Keeps working on bad connections</h3><p>Everyday work continues offline and syncs safely when the connection returns, without duplicates or lost changes.</p><p>Benefit: <b>no lost or double work</b>.</p></div>
+        <div class="ben rv"><small>Growth</small><h3>Ready for more centres and countries</h3><p>Modules are switched on per centre, country rules are kept separate from the core, and capacity is measured before it's needed.</p><p>Benefit: <b>predictable cost as the business grows</b>.</p></div>
+      </div>
+      <p class="pk-note rv">Engineering teams and partners can ask for a detailed technical walkthrough under NDA.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding-top:0" id="demo">
+    <div class="wrap">
+      <div class="cta rv">
+        <div>
+          <span class="eyebrow">Private demo</span>
+          <h2>Run a typing or PRO centre? See it with your own services.</h2>
+          <p>The platform is in final testing before launch. I'm giving live demos to a small number of centres, set up with your services and prices, with pricing for your centre and flexible packages as you grow. Early centres can shape what ships first.</p>
+        </div>
+        <div class="actions">
+          <a href="https://wa.me/971582255782?text=Hi%20Rasi%2C%20I%27d%20like%20a%20demo%20of%20the%20typing%20centre%20platform." class="btn btn-solid">Book a demo on WhatsApp <svg><use href="#arrow"/></svg></a>
+          <a href="mailto:kvmohammedrasi@gmail.com?subject=Typing%20centre%20platform%20demo" class="btn btn-line">Request by email <svg><use href="#arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© <span id="yr">2026</span> Mohammed Rasi KV. All rights reserved. Screenshots show fictional demo data.</span><a href="../">← Back to portfolio</a></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.1});
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  const TOUR = [
+    ['job','Jobs','Each job has one owner who accepts it, a deadline, required documents and a live status everyone sees.'],
+    ['leads','Leads','Enquiries from WhatsApp, walk-ins and referrals move across a board until they become paying customers.'],
+    ['compliance','Compliance hub','Every expiring document in one place, so renewals are never missed.'],
+    ['attendance','Attendance','Monthly attendance with late, leave and holiday marks feeding payroll.'],
+    ['arabic','Arabic','The whole interface switches to Arabic with a right-to-left layout; each person chooses their own language.']
+  ];
+  const img = document.getElementById('tour-img'), cap = document.getElementById('tour-cap'), tabs = [...document.querySelectorAll('.tab')];
+  function show(i){
+    const [f,t,d] = TOUR[i];
+    img.src = '../assets/uae-app/' + f + '.webp'; img.alt = t + ' screen (demo data)';
+    cap.innerHTML = '<b>' + t + '.</b> ' + d;
+    tabs.forEach((b,k) => { b.setAttribute('aria-selected', k===i); b.tabIndex = k===i ? 0 : -1; });
+  }
+  tabs.forEach((b,i) => { b.addEventListener('click', () => show(i)); b.addEventListener('keydown', e => {
+    if (e.key==='ArrowDown'||e.key==='ArrowRight'){ e.preventDefault(); const n=(i+1)%tabs.length; tabs[n].focus(); show(n); }
+    if (e.key==='ArrowUp'||e.key==='ArrowLeft'){ e.preventDefault(); const n=(i-1+tabs.length)%tabs.length; tabs[n].focus(); show(n); }
+  }); });
+  show(0);
+  TOUR.forEach(([f]) => { const p = new Image(); p.src = '../assets/uae-app/' + f + '.webp'; });
+  // Screenshots are for viewing only: no right-click save or drag.
+  document.querySelectorAll('.shot').forEach(s => { s.addEventListener('contextmenu', e => e.preventDefault()); s.addEventListener('dragstart', e => e.preventDefault()); });
+</script>
+</body>
+</html>

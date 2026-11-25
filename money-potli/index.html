@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Money Potli — Case Study · Mohammed Rasi KV</title>
+<meta name="description" content="How Mohammed Rasi KV turned real-life money problems into Money Potli: a private, offline-first finance app with on-device ML, multi-currency support and 550+ automated tests.">
+<meta name="theme-color" content="#f6f6f2">
+<meta property="og:title" content="Money Potli — Case Study">
+<meta property="og:description" content="From requirements to a tested, launched product: on-device ML, multi-currency, privacy by design.">
+<meta property="og:image" content="https://mrasikv.github.io/assets/money-potli/feature.webp">
+<meta property="og:url" content="https://mrasikv.github.io/money-potli/">
+<link rel="icon" href="../assets/money-potli/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/case.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="arrow" viewBox="0 0 16 16"><path d="M1 8h13M10 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="logo" viewBox="0 0 40 40">
+      <path d="M8 36V17a12 12 0 0 1 24 0v19" fill="none" stroke="#6f7f62" stroke-width="2.4"/>
+      <path d="M13 36V18.5a7 7 0 0 1 14 0V36" fill="none" stroke="#a9b49e" stroke-width="1.6"/>
+      <path d="M20 12.5l1.5 3.6 3.6 1.5-3.6 1.5L20 22.7l-1.5-3.6-3.6-1.5 3.6-1.5z" fill="#6f7f62"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <nav class="wrap nav" aria-label="Main">
+    <a href="../" class="logo" aria-label="Mohammed Rasi KV, home"><svg><use href="#logo"/></svg><span><b>MOHAMMED RASI</b><small>SOFTWARE ENGINEER</small></span></a>
+    <a href="../#work" class="back"><svg><use href="#arrow"/></svg><span>Back to portfolio</span></a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="rv">
+        <div class="app-id"><img src="../assets/money-potli/icon.png" alt="Money Potli app icon" width="56" height="56"><span>Case study · Product I designed, engineered and launched</span></div>
+        <h1>Money Potli</h1>
+        <p class="lead">A private, offline-first money app for families in India and the Gulf. It started as a list of everyday frustrations and became a tested, launched product, built end to end by one engineer.</p>
+        <dl class="meta">
+          <div><dt>Role</dt><dd>Product, design &amp; engineering</dd></div>
+          <div><dt>Platforms</dt><dd>Android &amp; Web (Flutter)</dd></div>
+          <div><dt>Status</dt><dd>Public beta 0.1</dd></div>
+        </dl>
+      </div>
+      <div class="hero-art rv"><img src="../assets/money-potli/feature.webp" alt="Money Potli: all your money, one potli" width="1024" height="500"></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="wrap">
+    <div class="stats rv">
+      <div class="stat"><b>550+</b><span>Automated tests, incl. 181 on-device end-to-end cases</span></div>
+      <div class="stat"><b>239 ms</b><span>Launch to dashboard with 24,000 transactions</span></div>
+      <div class="stat"><b>~400 KB</b><span>On-device ML model, no data leaves the phone</span></div>
+      <div class="stat"><b>36k</b><span>Lines of production Dart, 41 screens</span></div>
+    </div>
+  </div>
+
+  <!-- BRIEF -->
+  <section>
+    <div class="wrap brief">
+      <div class="rv">
+        <span class="eyebrow">The brief</span>
+        <h2>Start with what people actually struggle with</h2>
+        <p>Before writing any code, I listed the real problems of the people I was building for: salaried families in Kerala and expats across the Gulf, who earn in one currency, spend in another, pay with cash, cards and UPI, lend to friends, and run kuris and EMIs.</p>
+        <p>Every feature in the app traces back to one of these requirements.</p>
+      </div>
+      <ul class="needs rv">
+        <li>Typing every expense is tedious, so I stop after a week.</li>
+        <li>I earn in dirhams and spend in rupees. Apps get this wrong.</li>
+        <li>I don't want my money data on someone's server.</li>
+        <li>I've lost years of records to a phone change before.</li>
+        <li>Friends, kuri, EMIs, cards — real life isn't just "expenses".</li>
+        <li>It has to stay fast after years of entries.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- REQUIREMENT → SOLUTION -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Requirement → solution</span><h2>How each need became a feature</h2></div><p>Product decisions on the left, the engineering that makes them dependable on the right.</p></div>
+      <div class="rs">
+        <div class="rs-row rv">
+          <div class="rs-need"><small>Requirement</small><h3>Entering expenses must be effortless</h3></div>
+          <div><small>What I built</small><p>Bank SMS import in one tap, voice entry ("spent 250 on groceries"), bill scanning with the camera, and descriptions that learn your habits by shop, time of day and price.</p></div>
+          <div class="rs-eng"><small>Engineering</small><p>A TensorFlow Lite category model (~400 KB) runs on the phone, with TensorFlow.js on the web and a built-in fallback interpreter. Suggestions went from <b>654 ms to 49 ms</b> after indexing past entries.</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>Requirement</small><h3>Work across India and the Gulf</h3></div>
+          <div><small>What I built</small><p>Accounts, loans and holdings in their own currencies; foreign spending shows the live rate, the bank's fee and GST/VAT; Gulf dinars keep their three decimals.</p></div>
+          <div class="rs-eng"><small>Engineering</small><p>Rates from two public sources, cached offline with built-in fallbacks. Each entry stores its value in the main currency on the day, so history never shifts when rates move.</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>Requirement</small><h3>Private by default</h3></div>
+          <div><small>What I built</small><p>No account, no server, no analytics. PIN and fingerprint lock, a one-tap privacy switch, and backups only to the user's own Google Drive.</p></div>
+          <div class="rs-eng"><small>Engineering</small><p>PIN hashed with salted PBKDF2 in the Android Keystore, screenshots blocked while locked, friend sync files encrypted with <b>AES-256-GCM</b>, Drive limited to a hidden app folder.</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>Requirement</small><h3>Never lose a record</h3></div>
+          <div><small>What I built</small><p>Scheduled Drive backups, weekly on-device snapshots, and an automatic safety copy before every restore or erase.</p></div>
+          <div class="rs-eng"><small>Engineering</small><p>Schema versioning with migrations, all-or-nothing restores, checksummed compressed backups that older versions still read, validated by a <b>3-year day-by-day simulation</b>.</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>Requirement</small><h3>Model real-life money</h3></div>
+          <div><small>What I built</small><p>Lent &amp; borrowed with WhatsApp reminders, kuris, EMIs with amortisation, credit cards with due dates, savings goals, budgets with daily limits, and investments with live prices.</p></div>
+          <div class="rs-eng"><small>Engineering</small><p>Balances are always derived from transactions, never stored, so every screen agrees. Recurring entries are idempotent and keep their day across time-zone and clock changes.</p></div>
+        </div>
+        <div class="rs-row rv">
+          <div class="rs-need"><small>Requirement</small><h3>Stay fast for years</h3></div>
+          <div><small>What I built</small><p>Instant month views, search across all history, smooth scrolling, and a read-only dashboard for the computer served from the phone over Wi-Fi.</p></div>
+          <div class="rs-eng"><small>Engineering</small><p>Month and search indexes built once per change, heavy work moved off the UI thread. Measured: <b>0 dropped frames</b> scrolling 24,000 entries on a real Samsung phone.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">The product</span><h2>Screens from the app</h2></div><div class="gal-ctrl"><button class="gbtn" id="gprev" type="button" aria-label="Scroll screenshots left"><svg style="transform:scaleX(-1)"><use href="#arrow"/></svg></button><button class="gbtn" id="gnext" type="button" aria-label="Scroll screenshots right"><svg><use href="#arrow"/></svg></button></div></div>
+      <div class="gallery rv" id="gallery" tabindex="0" aria-label="Money Potli screenshots">
+        <figure><img src="../assets/money-potli/screen-1.webp" alt="Dashboard with net worth, monthly summary and insights" width="720" height="1280" loading="lazy"><figcaption>Dashboard &amp; insights</figcaption></figure>
+        <figure><img src="../assets/money-potli/screen-2.webp" alt="Bank SMS import turning messages into entries" width="720" height="1280" loading="lazy"><figcaption>Bank SMS → entries in one tap</figcaption></figure>
+        <figure><img src="../assets/money-potli/screen-3.webp" alt="New transaction with learned descriptions by time of day" width="720" height="1280" loading="lazy"><figcaption>Learns your daily habits</figcaption></figure>
+        <figure><img src="../assets/money-potli/screen-4.webp" alt="Budgets with daily allowance" width="720" height="1280" loading="lazy"><figcaption>Budgets with a daily limit</figcaption></figure>
+        <figure><img src="../assets/money-potli/screen-5.webp" alt="Accounts: bank, cash, wallets and credit cards" width="720" height="1280" loading="lazy"><figcaption>Every card and account</figcaption></figure>
+        <figure><img src="../assets/money-potli/screen-6.webp" alt="Loans and savings goals" width="720" height="1280" loading="lazy"><figcaption>Loans, kuri &amp; goals</figcaption></figure>
+        <figure><img src="../assets/money-potli/screen-7.webp" alt="Friends lent and borrowed with WhatsApp reminders" width="720" height="1280" loading="lazy"><figcaption>Friends &amp; settling up</figcaption></figure>
+        <figure><img src="../assets/money-potli/screen-8.webp" alt="Privacy features: hidden amounts, PIN, own Drive backup" width="720" height="1280" loading="lazy"><figcaption>Private &amp; offline</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Engineering</span><h2>Architecture at a glance</h2></div><p>Clear layers, so features can grow without breaking what already works.</p></div>
+      <div class="arch-grid">
+        <div class="layers rv">
+          <div class="layer"><b>Interface</b><span>41 screens, Material 3, light/dark themes, responsive: bottom bar on phones, rail on wide screens</span></div>
+          <div class="layer"><b>State</b><span>Riverpod providers and settings; go_router navigation with deep links for shared files</span></div>
+          <div class="layer"><b>Domain</b><span>Finance maths: balances, budgets, amortisation, currency conversion, recurring rules</span></div>
+          <div class="layer"><b>Data &amp; services</b><span>Local store (sembast: file on mobile, IndexedDB on web), SMS / voice / bill parsing, on-device ML, Drive backup, live rates and prices</span></div>
+        </div>
+        <div class="side-card rv">
+          <h3>Stack</h3>
+          <div class="chips"><span>Flutter</span><span>Dart</span><span>Riverpod</span><span>go_router</span><span>sembast</span><span>TensorFlow Lite</span><span>TensorFlow.js</span><span>Python (model training)</span><span>fl_chart</span><span>Google Drive API</span></div>
+          <ul>
+            <li>Release builds obfuscated and signed</li>
+            <li>CSV exports protected against spreadsheet formula injection</li>
+            <li>Security review documented, with known gaps and planned fixes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUALITY -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Quality</span><h2>Tested like it handles real money</h2></div><p>Because it does. Every release is checked on a real phone, with years of generated data.</p></div>
+      <div class="quality">
+        <div class="q rv"><b>373</b><h3>Unit &amp; widget tests</h3><p>Finance maths, parsers, currency, backups, migrations and the ML tokenizer, run headless on every change.</p></div>
+        <div class="q rv"><b>180 / 181</b><h3>On-device end-to-end cases</h3><p>Every user flow driven on a Samsung Galaxy S20 FE; one device-only case skipped with a documented reason.</p></div>
+        <div class="q rv"><b>22</b><h3>Issues caught before release</h3><p>Found by the test suite and fixed, each linked to the test that now guards it.</p></div>
+      </div>
+      <div class="perf rv">
+        <table>
+          <thead><tr><th>Measured on a real phone</th><th>5 years, heavy use (23,863 entries)</th></tr></thead>
+          <tbody>
+            <tr><td>Launch → dashboard drawn</td><td>239 ms</td></tr>
+            <tr><td>Save a transaction → shown in the list</td><td>16 ms</td></tr>
+            <tr><td>Category suggestion, 20 keystrokes</td><td>49 ms (was 654 ms)</td></tr>
+            <tr><td>Scroll the transaction list</td><td>0 dropped frames</td></tr>
+            <tr><td>Memory used by 5 years of data</td><td>16 MB</td></tr>
+          </tbody>
+          <caption>Profile build, on-disk database, generated history with salary, rent and 9–17 expenses a day.</caption>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Delivery</span><h2>From idea to launch</h2></div><p>The same steps I follow on client projects.</p></div>
+      <ol class="steps rv">
+        <li><h3>Requirements</h3><p>Real user problems written down first, each one a testable need.</p></li>
+        <li><h3>Design</h3><p>Flows and screens shaped around the fastest way to get each job done.</p></li>
+        <li><h3>Engineering</h3><p>Layered architecture, local-first data and security built in from day one.</p></li>
+        <li><h3>Testing</h3><p>Unit, end-to-end and performance tests on real devices before every release.</p></li>
+        <li><h3>Launch</h3><p>Play Store listing, screenshots, short videos and social kit, all ready to go.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="cta rv">
+        <div>
+          <span class="eyebrow">Your project next</span>
+          <h2>Have requirements that need a dependable product?</h2>
+          <p>Whether it's an app, an ERP module or a workflow that's still on spreadsheets, I'll take it from your list of needs to tested software in production.</p>
+        </div>
+        <div class="actions">
+          <a href="https://wa.me/971582255782" class="btn btn-solid">Chat on WhatsApp <svg><use href="#arrow"/></svg></a>
+          <a href="mailto:kvmohammedrasi@gmail.com" class="btn btn-line">Email me <svg><use href="#arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© <span id="yr">2026</span> Mohammed Rasi KV. All rights reserved.</span><span><a href="privacy/">Privacy policy</a> · <a href="../">← Back to portfolio</a></span></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.1});
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  const g = document.getElementById('gallery');
+  const step = () => g.querySelector('figure').getBoundingClientRect().width + 18;
+  document.getElementById('gprev').addEventListener('click', () => g.scrollBy({left: -step() * 2, behavior: 'smooth'}));
+  document.getElementById('gnext').addEventListener('click', () => g.scrollBy({left: step() * 2, behavior: 'smooth'}));
+</script>
+</body>
+</html>

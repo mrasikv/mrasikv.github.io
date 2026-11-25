@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palm Tree India — Case Study · Mohammed Rasi KV</title>
+<meta name="description" content="Custom business modules Mohammed Rasi KV designed and built for Palm Tree India: lead management CRM, task management, quality checklists and support tickets.">
+<meta name="theme-color" content="#f6f6f2">
+<meta property="og:title" content="Palm Tree India — Case Study">
+<meta property="og:description" content="Four custom business modules built into a company's HR platform: CRM, tasks, quality checklists and support.">
+<meta property="og:url" content="https://mrasikv.github.io/palm-tree/">
+<meta property="og:image" content="https://mrasikv.github.io/assets/palm-tree/crm.webp">
+<link rel="icon" href="../assets/logos/palmtree.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/case.css">
+<style>
+  .app-id img.pt{width:96px;height:44px;border-radius:8px;object-fit:cover;background:#ffe100;box-shadow:none}
+  .scope{margin-top:22px;padding:14px 16px;border-left:3px solid var(--sage);background:var(--surface);font-size:.86rem;color:#3a3f37;border-radius:0 6px 6px 0}
+  .hero-modules{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .hm{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px}
+  .hm .ic{width:42px;height:42px;border-radius:50%;background:var(--sage);color:#fff;display:grid;place-items:center;margin-bottom:14px}
+  .hm .ic svg{width:20px;height:20px}
+  .hm b{display:block;font-family:var(--serif);font-weight:400;font-size:1.2rem}
+  .hm span{font-size:.82rem;color:var(--muted)}
+
+  .module{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:start;padding:48px 0;border-top:1px solid var(--line)}
+  .module:first-of-type{border-top:0;padding-top:0}
+  .module h3{font-size:1.9rem;margin:8px 0 12px}
+  .module>div>p{color:#3a3f37}
+  .caps{list-style:none;display:grid;gap:10px;margin-top:20px}
+  .caps li{font-size:.9rem;color:#3a3f37;padding-left:20px;position:relative}
+  .caps li::before{content:"";position:absolute;left:0;top:7px;width:8px;height:8px;background:var(--sage);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+  .caps b{font-weight:600}
+  .value{margin-top:20px;font-size:.86rem;color:var(--sage-dark);font-weight:600}
+  /* Screenshots: protected, with watermark */
+  .shot{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 44px rgba(31,35,29,.1);background:var(--surface);user-select:none;-webkit-user-select:none}
+  .shot img{width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+  .shot::after{content:"mrasikv.github.io";position:absolute;right:12px;bottom:10px;font-size:.66rem;letter-spacing:.12em;color:rgba(31,35,29,.45);background:rgba(255,255,255,.75);padding:3px 8px;border-radius:999px}
+  .shot-empty{aspect-ratio:16/10;display:grid;place-items:center;background:linear-gradient(160deg,#eef0ea,#e3e7dc)}
+  .shot-empty svg{width:64px;height:64px;color:var(--sage-line)}
+  .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .role{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:24px}
+  .role h3{font-family:var(--sans);font-size:.95rem;font-weight:700;margin-bottom:6px}
+  .role p{font-size:.86rem;color:var(--muted)}
+  .quote{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:40px 44px}
+  .quote blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.6rem);line-height:1.45}
+  .quote figcaption{margin-top:18px;font-size:.88rem;color:var(--muted)}
+  .quote figcaption b{color:var(--text)}
+  @media (max-width:980px){
+    .module{grid-template-columns:1fr;gap:24px}
+    .roles{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    .hero-modules{grid-template-columns:1fr 1fr;gap:10px}
+    .hm{padding:16px}
+    .quote{padding:28px 24px}
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="arrow" viewBox="0 0 16 16"><path d="M1 8h13M10 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="logo" viewBox="0 0 40 40">
+      <path d="M8 36V17a12 12 0 0 1 24 0v19" fill="none" stroke="#6f7f62" stroke-width="2.4"/>
+      <path d="M13 36V18.5a7 7 0 0 1 14 0V36" fill="none" stroke="#a9b49e" stroke-width="1.6"/>
+      <path d="M20 12.5l1.5 3.6 3.6 1.5-3.6 1.5L20 22.7l-1.5-3.6-3.6-1.5 3.6-1.5z" fill="#6f7f62"/>
+    </symbol>
+    <symbol id="i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></symbol>
+    <symbol id="i-task" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l3 3 5-6"/></symbol>
+    <symbol id="i-qa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 4h6v3H9zM7 6H5v15h14V6h-2M8 12h8M8 16h5"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 5h16v10H9l-5 4z"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <nav class="wrap nav" aria-label="Main">
+    <a href="../" class="logo" aria-label="Mohammed Rasi KV, home"><svg><use href="#logo"/></svg><span><b>MOHAMMED RASI</b><small>SOFTWARE ENGINEER</small></span></a>
+    <a href="../#work" class="back"><svg><use href="#arrow"/></svg><span>Back to portfolio</span></a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="rv">
+        <div class="app-id"><img class="pt" src="../assets/logos/palmtree.png" alt="Palm Tree logo" width="241" height="110"><span>Case study · Client project</span></div>
+        <h1>Palm Tree India</h1>
+        <p class="lead">Palm Tree needed more than an HR system. Their sales pipeline, staff tasks, daily quality checks and support requests had to live in the same place their team already worked. I designed and built four custom business modules into their platform to make that happen.</p>
+        <dl class="meta">
+          <div><dt>Role</dt><dd>Full-stack engineer</dd></div>
+          <div><dt>Stack</dt><dd>Laravel · Vue.js · MySQL</dd></div>
+          <div><dt>Scope</dt><dd>4 custom modules</dd></div>
+        </dl>
+        <p class="scope">Screenshots use demo data, with the rest of the system blurred. This page shows only my work. The core HR features (attendance, leave, payroll) came with the existing platform; everything below was designed and built by me on top of it.</p>
+      </div>
+      <div class="hero-modules rv">
+        <a class="hm" href="#crm"><span class="ic"><svg><use href="#i-lead"/></svg></span><b>Lead CRM</b><span>Pipelines, board &amp; reports</span></a>
+        <a class="hm" href="#tasks"><span class="ic"><svg><use href="#i-task"/></svg></span><b>Task management</b><span>Assign, track &amp; review</span></a>
+        <a class="hm" href="#quality"><span class="ic"><svg><use href="#i-qa"/></svg></span><b>Quality checklists</b><span>Daily to month-end checks</span></a>
+        <a class="hm" href="#support"><span class="ic"><svg><use href="#i-ticket"/></svg></span><b>Support tickets</b><span>Requests with full history</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="wrap">
+    <div class="stats rv">
+      <div class="stat"><b>4</b><span>Business modules, built into the existing platform</span></div>
+      <div class="stat"><b>58</b><span>New screens and interface components</span></div>
+      <div class="stat"><b>50</b><span>Production database changes, shipped safely</span></div>
+      <div class="stat"><b>7</b><span>Automatic notification types that keep teams in sync</span></div>
+    </div>
+  </div>
+
+  <!-- MODULES -->
+  <section>
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">What I built</span><h2>Four modules, one place to work</h2></div><p>Each module started from how the team actually works, then became software that fits that way of working.</p></div>
+
+      <article class="module rv" id="crm">
+        <div>
+          <span class="eyebrow">Module 01 · Sales</span>
+          <h3>Lead management CRM</h3>
+          <p>Every enquiry captured, assigned and followed up, so no lead is lost and managers can see the whole pipeline at a glance.</p>
+          <ul class="caps">
+            <li><b>Separate pipelines</b> for each business line, each with its own stages, set up from reusable templates</li>
+            <li><b>Kanban board and list views</b>, with filters by stage, owner, source, dates and any custom field</li>
+            <li><b>Custom fields per pipeline</b> (text, number, date, phone, email, choices), with duplicate-lead protection</li>
+            <li><b>Bulk import from Excel</b>, plus remarks, activity history and @mentions on every lead</li>
+            <li><b>Reports</b> on lead flow by stage, source and team member</li>
+          </ul>
+          <p class="value">Result: one pipeline view for managers and a clear "my leads" view for every salesperson.</p>
+        </div>
+        <div class="shot" data-shot="crm"><img src="../assets/palm-tree/crm.webp" alt="Lead management board with pipeline stages and lead cards (demo data)" width="1600" height="1000" loading="lazy" draggable="false"></div>
+      </article>
+
+      <article class="module rv" id="tasks">
+        <div>
+          <span class="eyebrow">Module 02 · Operations</span>
+          <h3>Task management</h3>
+          <p>Work assigned with clear ownership, visible progress and a proper review step before it's marked done.</p>
+          <ul class="caps">
+            <li><b>Admin dashboard and calendar</b> showing every task across the team</li>
+            <li><b>Assignees, followers and a reviewer</b> for each task, with "mark for review" before completion</li>
+            <li><b>Checklists with progress</b>, so each task shows how far along it really is</li>
+            <li><b>Blocked tasks</b> flagged with a reason and an instant alert to the right people</li>
+            <li><b>Threaded comments</b> and <b>reminders with priority</b>, all in the task itself</li>
+          </ul>
+          <p class="value">Result: managers see what's stuck before deadlines slip; staff see exactly what's theirs today.</p>
+        </div>
+        <div class="shot" data-shot="tasks"><img src="../assets/palm-tree/tasks.webp" alt="Task dashboard with status, priority, team and progress (demo data)" width="1600" height="1000" loading="lazy" draggable="false"></div>
+      </article>
+
+      <article class="module rv" id="quality">
+        <div>
+          <span class="eyebrow">Module 03 · Quality</span>
+          <h3>Quality checklists</h3>
+          <p>Routine checks turned into structured digital checklists that staff fill in and managers review.</p>
+          <ul class="caps">
+            <li><b>Checklists built from sections and questions</b>, designed by admins without any code</li>
+            <li><b>Smart questions</b> that appear only when an earlier answer needs a follow-up</li>
+            <li><b>Daily, weekly, monthly and month-end</b> schedules, assigned to the right staff</li>
+            <li><b>Time tracking</b> on each checklist and a response history to review</li>
+          </ul>
+          <p class="value">Result: consistent checks across the team, with proof of every one completed.</p>
+        </div>
+        <div class="shot" data-shot="quality"><img src="../assets/palm-tree/quality.webp" alt="Quality checklist dashboard with assignments and today's pending checks (demo data)" width="1600" height="1000" loading="lazy" draggable="false"></div>
+      </article>
+
+      <article class="module rv" id="support">
+        <div>
+          <span class="eyebrow">Module 04 · Support</span>
+          <h3>Support tickets</h3>
+          <p>Internal requests and issues handled as tickets instead of scattered messages, with a full conversation history.</p>
+          <ul class="caps">
+            <li><b>Ticket conversations</b> with file attachments</li>
+            <li><b>Custom ticket statuses</b> that match the team's own process</li>
+            <li><b>Staff self-service</b>: raise a ticket and follow its progress</li>
+            <li><b>Notifications</b> on every new reply, so nothing waits unseen</li>
+          </ul>
+          <p class="value">Result: every request tracked from raised to resolved.</p>
+        </div>
+        <div class="shot" data-shot="support"><img src="../assets/palm-tree/support.webp" alt="Support ticket with conversation and ticket details (demo data)" width="1600" height="1000" loading="lazy" draggable="false"></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ROLES -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Designed for every role</span><h2>The right view for each person</h2></div><p>Built into the platform's existing permissions, so everyone sees exactly what they should.</p></div>
+      <div class="roles">
+        <div class="role rv"><h3>Managers &amp; admins</h3><p>Company-wide dashboards, pipelines, calendars and reports; set up pipelines, checklists and ticket statuses themselves.</p></div>
+        <div class="role rv"><h3>Reviewers</h3><p>A dedicated view for tasks waiting on their review, with reminders they can send to the team.</p></div>
+        <div class="role rv"><h3>Staff</h3><p>Self-service views for their own leads, tasks, checklists and tickets — nothing more to learn.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGINEERING -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Engineering</span><h2>Built to fit, not bolted on</h2></div><p>Extending a live system that a company depends on every day.</p></div>
+      <div class="quality">
+        <div class="q rv"><h3>Follows the existing platform</h3><p>New modules use the platform's own structure, permissions and design, so they feel native and stay maintainable.</p></div>
+        <div class="q rv"><h3>Safe changes to live data</h3><p>Every database change is versioned and reversible; data clean-ups were scripted and run without downtime.</p></div>
+        <div class="q rv"><h3>Data you can trust</h3><p>Related records are saved together or not at all, and duplicate leads are blocked by rules each pipeline defines.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <figure class="quote rv">
+        <blockquote>“Rasi's service has been excellent. Even working remotely, he connected with our company like part of the team and delivered on time, every time. We're looking forward to working with him on many more projects.”</blockquote>
+        <figcaption><b>Shamsad</b> · Project partner, Palm Tree India project</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="cta rv">
+        <div>
+          <span class="eyebrow">Your business next</span>
+          <h2>Already have a system that doesn't quite fit?</h2>
+          <p>I can extend the software you already use with the modules your team really needs, or build them from scratch, without disrupting the work that runs on it today.</p>
+        </div>
+        <div class="actions">
+          <a href="https://wa.me/971582255782" class="btn btn-solid">Chat on WhatsApp <svg><use href="#arrow"/></svg></a>
+          <a href="mailto:kvmohammedrasi@gmail.com" class="btn btn-line">Email me <svg><use href="#arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© <span id="yr">2026</span> Mohammed Rasi KV. All rights reserved.</span><a href="../">← Back to portfolio</a></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.1});
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  // Screenshots are for viewing only: no right-click save or drag.
+  document.querySelectorAll('.shot').forEach(s => { s.addEventListener('contextmenu', e => e.preventDefault()); s.addEventListener('dragstart', e => e.preventDefault()); });
+</script>
+</body>
+</html>

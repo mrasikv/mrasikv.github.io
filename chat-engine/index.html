@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Real-time Chat Engine — Architecture · Mohammed Rasi KV</title>
+<meta name="description" content="Architecture of a real-time chat engine built with Go, Kafka, WebSockets and MongoDB: ordered delivery, horizontal scaling and no lost messages.">
+<meta name="theme-color" content="#f6f6f2">
+<meta property="og:title" content="Real-time Chat Engine — Architecture">
+<meta property="og:description" content="Event-driven chat with Go WebSocket gateways, Kafka and MongoDB.">
+<meta property="og:url" content="https://mrasikv.github.io/chat-engine/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/case.css">
+<style>
+  .hero-badge{display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;font-size:.8rem;color:var(--muted)}
+  .hero-badge i{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--sage);color:#fff}
+  .hero-badge svg{width:22px;height:22px}
+  .goals{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .goal{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px}
+  .goal b{display:block;font-family:var(--serif);font-weight:400;font-size:1.25rem;margin-bottom:6px}
+  .goal span{font-size:.88rem;color:var(--muted)}
+
+  /* Diagram */
+  .diagram{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px;overflow-x:auto}
+  .diagram svg{display:block;width:100%;min-width:760px;height:auto}
+  .diagram text{font-family:"DM Sans",system-ui,sans-serif}
+  .legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px;font-size:.8rem;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:8px}
+  .legend i{width:22px;height:0;border-top:2px solid var(--text)}
+  .legend i.async{border-top:2px dashed var(--potli)}
+  .legend i.auth{border-top:2px dotted var(--gold)}
+  .scroll-hint{display:none;font-size:.78rem;color:var(--muted);margin-top:8px}
+
+  /* Flow */
+  .flow{list-style:none;display:grid;gap:12px;counter-reset:f}
+  .flow li{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 20px}
+  .flow li::before{counter-increment:f;content:counter(f);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--sage);color:#fff;font-weight:700;font-size:.85rem}
+  .flow b{display:block;font-size:.98rem;margin-bottom:3px}
+  .flow span{font-size:.88rem;color:#3a3f37}
+  code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.82em;background:var(--band);padding:1px 6px;border-radius:4px}
+
+  .decisions{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .dec{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:24px}
+  .dec small{display:block;font-size:.64rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .dec h3{font-size:1.3rem;margin-bottom:8px}
+  .dec p{font-size:.9rem;color:#3a3f37}
+  .topics{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;font-size:.88rem}
+  .topics th,.topics td{text-align:left;padding:12px 16px;border-top:1px solid var(--line);vertical-align:top}
+  .topics th{background:var(--band);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-top:0}
+  .topics td:first-child{white-space:nowrap}
+  .tbl-wrap{overflow-x:auto;border-radius:6px}
+  @media (max-width:980px){.goals{grid-template-columns:1fr 1fr}.decisions{grid-template-columns:1fr}.scroll-hint{display:block}}
+  @media (max-width:600px){.goals{grid-template-columns:1fr}.topics{font-size:.8rem}.topics th,.topics td{padding:10px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="arrow" viewBox="0 0 16 16"><path d="M1 8h13M10 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="logo" viewBox="0 0 40 40">
+      <path d="M8 36V17a12 12 0 0 1 24 0v19" fill="none" stroke="#6f7f62" stroke-width="2.4"/>
+      <path d="M13 36V18.5a7 7 0 0 1 14 0V36" fill="none" stroke="#a9b49e" stroke-width="1.6"/>
+      <path d="M20 12.5l1.5 3.6 3.6 1.5-3.6 1.5L20 22.7l-1.5-3.6-3.6-1.5 3.6-1.5z" fill="#6f7f62"/>
+    </symbol>
+    <symbol id="chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 5h16v10H9l-5 4z"/><path d="M8 9h8M8 12h5" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <nav class="wrap nav" aria-label="Main">
+    <a href="../" class="logo" aria-label="Mohammed Rasi KV, home"><svg><use href="#logo"/></svg><span><b>MOHAMMED RASI</b><small>SOFTWARE ENGINEER</small></span></a>
+    <a href="../#work" class="back"><svg><use href="#arrow"/></svg><span>Back to portfolio</span></a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="rv">
+        <div class="hero-badge"><i><svg><use href="#chat"/></svg></i>Architecture case study · Backend</div>
+        <h1>Real-time Chat Engine</h1>
+        <p class="lead">An event-driven messaging backend: Go WebSocket gateways for live connections, Kafka as the message backbone, and MongoDB for history. Designed so messages arrive instantly, in order, and are never lost, even while servers scale up, restart or fail.</p>
+        <dl class="meta">
+          <div><dt>Role</dt><dd>Backend &amp; architecture</dd></div>
+          <div><dt>Core stack</dt><dd>Go · Kafka · MongoDB</dd></div>
+          <div><dt>Pattern</dt><dd>Event-driven services</dd></div>
+        </dl>
+      </div>
+      <div class="rv">
+        <div class="goals" style="grid-template-columns:1fr 1fr">
+          <div class="goal"><b>Instant</b><span>Persistent WebSocket connections push messages the moment they're sent.</span></div>
+          <div class="goal"><b>Ordered</b><span>Every conversation keeps its exact message order.</span></div>
+          <div class="goal"><b>Durable</b><span>A message is accepted only once it's safely stored in Kafka.</span></div>
+          <div class="goal"><b>Scalable</b><span>Add gateway or worker instances; nothing else changes.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE DIAGRAM -->
+  <section style="padding-top:20px">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Architecture</span><h2>How the pieces fit</h2></div><p>Gateways only hold connections. Kafka carries every event. Workers do the slow work in the background.</p></div>
+      <div class="diagram rv" role="img" aria-label="Architecture diagram: clients connect to Go WebSocket gateways behind a load balancer. Gateways publish to Kafka topics. A persistence worker writes to MongoDB, a notification worker sends push notifications, and gateways consume the delivery topic to push messages to connected users. An auth service issues JWTs backed by PostgreSQL, and Redis tracks presence.">
+        <svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1f231d"/></marker>
+            <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1f6b4a"/></marker>
+            <marker id="aho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#b8922e"/></marker>
+          </defs>
+          <!-- zones -->
+          <text x="30" y="34" font-size="12" font-weight="700" letter-spacing="2" fill="#6b7066">CLIENTS</text>
+          <text x="250" y="34" font-size="12" font-weight="700" letter-spacing="2" fill="#6b7066">EDGE</text>
+          <text x="470" y="34" font-size="12" font-weight="700" letter-spacing="2" fill="#6b7066">EVENT BACKBONE</text>
+          <text x="780" y="34" font-size="12" font-weight="700" letter-spacing="2" fill="#6b7066">WORKERS &amp; STORAGE</text>
+
+          <!-- clients -->
+          <g><rect x="30" y="70" width="170" height="64" rx="10" fill="#f6f6f2" stroke="#cfd3c7"/><text x="115" y="98" text-anchor="middle" font-size="15" font-weight="600" fill="#1f231d">Web app</text><text x="115" y="118" text-anchor="middle" font-size="12" fill="#6b7066">Next.js · WebSocket</text></g>
+          <g><rect x="30" y="152" width="170" height="64" rx="10" fill="#f6f6f2" stroke="#cfd3c7"/><text x="115" y="180" text-anchor="middle" font-size="15" font-weight="600" fill="#1f231d">Mobile app</text><text x="115" y="200" text-anchor="middle" font-size="12" fill="#6b7066">WebSocket · push</text></g>
+
+          <!-- auth -->
+          <g><rect x="30" y="300" width="170" height="64" rx="10" fill="#fff" stroke="#b8922e"/><text x="115" y="328" text-anchor="middle" font-size="15" font-weight="600" fill="#1f231d">Auth API</text><text x="115" y="348" text-anchor="middle" font-size="12" fill="#6b7066">NestJS · issues JWT</text></g>
+          <g><rect x="30" y="400" width="170" height="56" rx="10" fill="#fff" stroke="#cfd3c7"/><text x="115" y="424" text-anchor="middle" font-size="14" font-weight="600" fill="#1f231d">PostgreSQL</text><text x="115" y="442" text-anchor="middle" font-size="12" fill="#6b7066">users · conversations</text></g>
+          <path d="M115 364V398" stroke="#b8922e" stroke-width="2" stroke-dasharray="2 4" marker-end="url(#aho)"/>
+
+          <!-- edge -->
+          <g><rect x="240" y="70" width="180" height="56" rx="10" fill="#fff" stroke="#cfd3c7"/><text x="330" y="96" text-anchor="middle" font-size="14" font-weight="600" fill="#1f231d">Load balancer</text><text x="330" y="114" text-anchor="middle" font-size="12" fill="#6b7066">TLS · sticky by user</text></g>
+          <g><rect x="240" y="160" width="180" height="210" rx="12" fill="#e3efe7" stroke="#1f6b4a"/>
+            <text x="330" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#1f231d">Go WebSocket</text>
+            <text x="330" y="204" text-anchor="middle" font-size="15" font-weight="700" fill="#1f231d">gateways</text>
+            <rect x="262" y="220" width="136" height="30" rx="6" fill="#fff" stroke="#a9b49e"/><text x="330" y="240" text-anchor="middle" font-size="12" fill="#1f231d">gateway 1</text>
+            <rect x="262" y="258" width="136" height="30" rx="6" fill="#fff" stroke="#a9b49e"/><text x="330" y="278" text-anchor="middle" font-size="12" fill="#1f231d">gateway 2</text>
+            <rect x="262" y="296" width="136" height="30" rx="6" fill="#fff" stroke="#a9b49e"/><text x="330" y="316" text-anchor="middle" font-size="12" fill="#1f231d">gateway N</text>
+            <text x="330" y="352" text-anchor="middle" font-size="11" fill="#56644b">stateless · scale out</text>
+          </g>
+          <g><rect x="240" y="400" width="180" height="56" rx="10" fill="#fff" stroke="#cfd3c7"/><text x="330" y="424" text-anchor="middle" font-size="14" font-weight="600" fill="#1f231d">Redis</text><text x="330" y="442" text-anchor="middle" font-size="12" fill="#6b7066">presence · who's online where</text></g>
+
+          <!-- client to LB to gateway -->
+          <path d="M200 102H238" stroke="#1f231d" stroke-width="2" marker-end="url(#ah)"/>
+          <path d="M200 184H222V112H238" fill="none" stroke="#1f231d" stroke-width="2" marker-end="url(#ah)"/>
+          <path d="M330 126V158" stroke="#1f231d" stroke-width="2" marker-end="url(#ah)"/>
+          <path d="M200 332H226V300H238" fill="none" stroke="#b8922e" stroke-width="2" stroke-dasharray="2 4" marker-end="url(#aho)"/>
+          <text x="232" y="290" text-anchor="end" font-size="11" fill="#b8922e">verify JWT</text>
+          <path d="M330 370V398" stroke="#1f231d" stroke-width="2" marker-end="url(#ah)" marker-start="url(#ah)"/>
+
+          <!-- kafka -->
+          <g><rect x="470" y="70" width="270" height="386" rx="14" fill="#1f231d"/>
+            <text x="605" y="102" text-anchor="middle" font-size="16" font-weight="700" fill="#f6f6f2">Apache Kafka</text>
+            <text x="605" y="122" text-anchor="middle" font-size="11" fill="#a9b49e">replicated · partitioned by conversation</text>
+            <rect x="492" y="140" width="226" height="58" rx="8" fill="#2c3329" stroke="#56644b"/><text x="505" y="164" font-size="12.5" font-family="JetBrains Mono,monospace" fill="#e3efe7">chat.messages</text><text x="505" y="184" font-size="11" fill="#a9b49e">every sent message</text>
+            <rect x="492" y="210" width="226" height="58" rx="8" fill="#2c3329" stroke="#56644b"/><text x="505" y="234" font-size="12.5" font-family="JetBrains Mono,monospace" fill="#e3efe7">chat.delivery</text><text x="505" y="254" font-size="11" fill="#a9b49e">messages to push, by gateway</text>
+            <rect x="492" y="280" width="226" height="58" rx="8" fill="#2c3329" stroke="#56644b"/><text x="505" y="304" font-size="12.5" font-family="JetBrains Mono,monospace" fill="#e3efe7">chat.receipts</text><text x="505" y="324" font-size="11" fill="#a9b49e">delivered · read</text>
+            <rect x="492" y="350" width="226" height="58" rx="8" fill="#2c3329" stroke="#56644b"/><text x="505" y="374" font-size="12.5" font-family="JetBrains Mono,monospace" fill="#e3efe7">chat.events</text><text x="505" y="394" font-size="11" fill="#a9b49e">typing · presence (short-lived)</text>
+            <text x="605" y="438" text-anchor="middle" font-size="11" fill="#a9b49e">+ dead-letter topic for failures</text>
+          </g>
+          <!-- gateway <-> kafka -->
+          <path d="M420 230H490" stroke="#1f6b4a" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#ahg)"/>
+          <text x="445" y="222" text-anchor="middle" font-size="11" fill="#1f6b4a">publish</text>
+          <path d="M490 252H422" stroke="#1f6b4a" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#ahg)"/>
+          <text x="445" y="270" text-anchor="middle" font-size="11" fill="#1f6b4a">consume</text>
+
+          <!-- workers -->
+          <g><rect x="780" y="70" width="190" height="64" rx="10" fill="#fff" stroke="#1f6b4a"/><text x="875" y="97" text-anchor="middle" font-size="14" font-weight="600" fill="#1f231d">Router worker</text><text x="875" y="116" text-anchor="middle" font-size="11.5" fill="#6b7066">finds recipients' gateways</text></g>
+          <g><rect x="780" y="160" width="190" height="64" rx="10" fill="#fff" stroke="#1f6b4a"/><text x="875" y="187" text-anchor="middle" font-size="14" font-weight="600" fill="#1f231d">Persistence worker</text><text x="875" y="206" text-anchor="middle" font-size="11.5" fill="#6b7066">batches writes · idempotent</text></g>
+          <g><rect x="780" y="250" width="190" height="64" rx="10" fill="#fff" stroke="#1f6b4a"/><text x="875" y="277" text-anchor="middle" font-size="14" font-weight="600" fill="#1f231d">Notification worker</text><text x="875" y="296" text-anchor="middle" font-size="11.5" fill="#6b7066">push to offline users</text></g>
+          <g><rect x="780" y="372" width="190" height="84" rx="10" fill="#f6f6f2" stroke="#cfd3c7"/><text x="875" y="402" text-anchor="middle" font-size="15" font-weight="600" fill="#1f231d">MongoDB</text><text x="875" y="422" text-anchor="middle" font-size="11.5" fill="#6b7066">message history</text><text x="875" y="440" text-anchor="middle" font-size="11.5" fill="#6b7066">indexed by conversation + time</text></g>
+          <!-- kafka -> workers (one bus) -->
+          <path d="M740 168H760" stroke="#1f6b4a" stroke-width="2.2" stroke-dasharray="6 5"/>
+          <path d="M760 102V282" stroke="#1f6b4a" stroke-width="2.2" stroke-dasharray="6 5"/>
+          <path d="M760 102H778" stroke="#1f6b4a" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#ahg)"/>
+          <path d="M760 192H778" stroke="#1f6b4a" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#ahg)"/>
+          <path d="M760 282H778" stroke="#1f6b4a" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#ahg)"/>
+          <!-- router publishes deliveries back to Kafka -->
+          <path d="M875 70V54H660V68" fill="none" stroke="#1f6b4a" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#ahg)"/>
+          <text x="768" y="48" text-anchor="middle" font-size="11" fill="#1f6b4a">publishes to chat.delivery</text>
+          <!-- persistence -> MongoDB (around the right edge) -->
+          <path d="M970 192H988V414H972" fill="none" stroke="#1f231d" stroke-width="2" marker-end="url(#ah)"/>
+          <!-- history read -->
+          <path d="M420 330H452V500H875V458" fill="none" stroke="#1f231d" stroke-width="1.6" stroke-dasharray="1 0" marker-end="url(#ah)"/>
+          <text x="560" y="492" font-size="11" fill="#6b7066">history: paged reads straight from MongoDB</text>
+        </svg>
+      </div>
+      <p class="scroll-hint">Swipe sideways to see the full diagram.</p>
+      <div class="legend"><span><i></i>Request / read</span><span><i class="async"></i>Kafka event (asynchronous)</span><span><i class="auth"></i>Authentication</span></div>
+    </div>
+  </section>
+
+  <!-- MESSAGE FLOW -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Message lifecycle</span><h2>What happens when you press send</h2></div><p>Each step is independent, so a slow database or a busy notification service never slows down live chat.</p></div>
+      <ol class="flow rv">
+        <li><div><b>Connect</b><span>The app opens a WebSocket to a gateway with a short-lived JWT from the Auth API. The gateway checks it once at the handshake and records in Redis which gateway the user is connected to.</span></div></li>
+        <li><div><b>Send</b><span>The client sends the message with its own unique <code>client_msg_id</code>. The gateway checks the user belongs to the conversation, applies rate limits, and publishes it to <code>chat.messages</code> keyed by <code>conversation_id</code>.</span></div></li>
+        <li><div><b>Acknowledge</b><span>Only after Kafka confirms the write (replicated, <code>acks=all</code>) does the gateway reply "sent" to the client. If anything fails before that, the client simply retries with the same ID.</span></div></li>
+        <li><div><b>Route</b><span>The router worker looks up where each recipient is connected and publishes to <code>chat.delivery</code> for those gateways; recipients who are offline are handed to the notification worker for a push notification.</span></div></li>
+        <li><div><b>Deliver</b><span>Each gateway consumes its deliveries and pushes them down the right sockets. The recipient's app sends back "delivered" and later "read" on <code>chat.receipts</code>.</span></div></li>
+        <li><div><b>Store</b><span>In parallel, the persistence worker writes messages to MongoDB in batches, using <code>client_msg_id</code> so a retried message is stored exactly once.</span></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TOPICS -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Event design</span><h2>Kafka topics</h2></div><p>Partition keys are chosen so ordering is guaranteed exactly where it matters.</p></div>
+      <div class="tbl-wrap rv">
+        <table class="topics">
+          <thead><tr><th>Topic</th><th>Key</th><th>Consumers</th><th>Why it's built this way</th></tr></thead>
+          <tbody>
+            <tr><td><span class="mono">chat.messages</span></td><td>conversation_id</td><td>router, persistence</td><td>Same key → same partition → messages in a conversation stay in order, while different conversations are processed in parallel.</td></tr>
+            <tr><td><span class="mono">chat.delivery</span></td><td>gateway_id</td><td>gateways</td><td>Each gateway reads only what it needs to push, so adding gateways spreads the load evenly.</td></tr>
+            <tr><td><span class="mono">chat.receipts</span></td><td>conversation_id</td><td>router, persistence</td><td>Delivered/read ticks follow the same ordering as the messages they refer to.</td></tr>
+            <tr><td><span class="mono">chat.events</span></td><td>conversation_id</td><td>gateways</td><td>Typing and presence are short-lived, with short retention, never stored as history.</td></tr>
+            <tr><td><span class="mono">chat.dlq</span></td><td>original key</td><td>alerts, replay</td><td>Anything that fails repeatedly is parked here for inspection and replay instead of blocking the stream.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Design decisions</span><h2>Why it's built this way</h2></div><p>Each choice trades a little complexity for a lot of reliability.</p></div>
+      <div class="decisions">
+        <div class="dec rv"><small>Language</small><h3>Go for the gateways</h3><p>Goroutines make tens of thousands of open sockets cheap. Each connection gets a reader and a writer goroutine with a bounded send buffer, so one slow client can never block the others; if its buffer fills, that client is disconnected and resumes cleanly.</p></div>
+        <div class="dec rv"><small>Backbone</small><h3>Kafka between everything</h3><p>Services never call each other directly. Kafka absorbs traffic spikes, keeps messages if a worker is down, and lets new features (search, moderation, analytics) be added later as new consumers without touching the gateways.</p></div>
+        <div class="dec rv"><small>Guarantees</small><h3>At-least-once, stored exactly once</h3><p>Producers retry until Kafka confirms; consumers commit offsets only after their work is done. Duplicates that this can create are removed using the client's message ID, which the database enforces as unique.</p></div>
+        <div class="dec rv"><small>Reconnects</small><h3>Resume, don't reload</h3><p>When a phone switches networks, the app reconnects and sends the last message ID it saw. The gateway fills the gap from history first, then switches to live delivery, so nothing is missed and nothing is shown twice.</p></div>
+        <div class="dec rv"><small>Storage</small><h3>MongoDB for history</h3><p>Messages are documents indexed by conversation and time, read with cursor-based pagination ("load older") that stays fast however long a chat gets. User accounts and memberships live in PostgreSQL behind the Auth API.</p></div>
+        <div class="dec rv"><small>Security</small><h3>Checked at every hop</h3><p>TLS everywhere, JWT verified at the socket handshake, origin checks, membership checked on every send, per-user rate limits and message size limits at the gateway.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPERATIONS -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><div><span class="eyebrow">Operations</span><h2>Built to run, not just to demo</h2></div></div>
+      <div class="quality">
+        <div class="q rv"><h3>Scale by adding instances</h3><p>Gateways are stateless and workers use Kafka consumer groups, so capacity grows by running more containers behind the load balancer.</p></div>
+        <div class="q rv"><h3>Graceful restarts</h3><p>On deploy, a gateway stops taking new connections, tells clients to reconnect elsewhere and drains its buffers, so releases cause no lost messages.</p></div>
+        <div class="q rv"><h3>Observable</h3><p>Health checks, metrics for connections, consumer lag and delivery latency, and structured logs carrying the message ID end to end.</p></div>
+      </div>
+      <div class="side-card rv" style="margin-top:16px">
+        <h3>Stack</h3>
+        <div class="chips"><span>Go</span><span>gorilla/websocket</span><span>Apache Kafka</span><span>MongoDB</span><span>Redis</span><span>NestJS</span><span>PostgreSQL</span><span>JWT</span><span>Next.js</span><span>Docker Compose</span><span>GitHub Actions</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="cta rv">
+        <div>
+          <span class="eyebrow">Your system next</span>
+          <h2>Need real-time features that stay reliable at scale?</h2>
+          <p>Chat, live notifications, tracking or dashboards: I design event-driven backends that stay fast and dependable as your users grow.</p>
+        </div>
+        <div class="actions">
+          <a href="https://wa.me/971582255782" class="btn btn-solid">Chat on WhatsApp <svg><use href="#arrow"/></svg></a>
+          <a href="mailto:kvmohammedrasi@gmail.com" class="btn btn-line">Email me <svg><use href="#arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© <span id="yr">2026</span> Mohammed Rasi KV. All rights reserved.</span><a href="../">← Back to portfolio</a></div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.08});
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
